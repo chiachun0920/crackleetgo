@@ -7,37 +7,26 @@ import (
 type TreeNode = tree.TreeNode
 
 func diameterOfBinaryTree(root *TreeNode) int {
-	var max = 0
-	return traverseAndEval(root, &max)
-}
-
-func traverseAndEval(root *TreeNode, max *int) int {
 	if root == nil {
 		return 0
 	}
 
-	length := calDiameter(root)
-	if length > *max {
-		*max = length
-	}
+	lHeight := treeHeight(root.Left)
+	rHeight := treeHeight(root.Right)
 
-	traverseAndEval(root.Left, max)
-	traverseAndEval(root.Right, max)
-	return *max
+	diameterNode := lHeight + rHeight + 2
+
+	return max(
+		diameterNode,
+		max(diameterOfBinaryTree(root.Left), diameterOfBinaryTree(root.Right)),
+	)
 }
 
-func calDiameter(root *TreeNode) int {
+func treeHeight(root *TreeNode) int {
 	if root == nil {
-		return 0
+		return -1
 	}
-	return treeHeight(root.Left) + treeHeight(root.Right)
-}
-
-func treeHeight(node *TreeNode) int {
-	if node == nil {
-		return 0
-	}
-	return 1 + max(treeHeight(node.Left), treeHeight(node.Right))
+	return 1 + max(treeHeight(root.Left), treeHeight(root.Right))
 }
 
 func max(a, b int) int {
