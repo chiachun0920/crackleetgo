@@ -9,6 +9,7 @@ func Test_maxSubArray(t *testing.T) {
 	}{
 		{[]int{-2, 1, -3, 4, -1, 2, 1, -5, 4}, 6},
 		{[]int{1}, 1},
+		{[]int{-2}, -2},
 	}
 
 	for _, e := range tests {
